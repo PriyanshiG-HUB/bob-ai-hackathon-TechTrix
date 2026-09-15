@@ -9,17 +9,17 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
+  name: "TechTrix"                             # REQUIRED — e.g., "Orion Squad"
   track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
+    name: "Hiteshree Chauhan"                           # REQUIRED — e.g., "Alice Chen"
     email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
-    - name: ""                         # REQUIRED — Team member 1
+    - name: "Rena Naik"                         # REQUIRED — Team member 1
       email: ""
-    - name: ""                         # Add more members by copying the two lines above
+    - name: "Priyanshi Gajiwala"                         # Add more members by copying the two lines above
       email: ""
-    - name: ""
+    - name: "Satvi Akola"
       email: ""
 
 submission:
