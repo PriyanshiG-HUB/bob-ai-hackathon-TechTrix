@@ -1,15 +1,17 @@
 """
 Unit Tests for PRR Signal Detection Engine
 ==========================================
-Tests:
-- Normal 2x2 table calculation
-- Zero denominator handling
+Comprehensive test suite verifying:
+- Normal 2x2 table calculation & PRR algebra
+- Zero denominator handling (A+B = 0, C+D = 0)
 - C = 0 division-by-zero handling
+- A = 0 with C > 0 handling
 - Sparse background C < 5 handling
-- High PRR with sparse background
-- High-confidence signal classification
-- Review priority classification (PRIORITY_1, PRIORITY_2, REVIEW, LOW)
-- Pearson Chi-Square calculation
+- Signal level categorization (LOW, MODERATE, HIGH)
+- Signal confidence classification (LOW, MODERATE, HIGH)
+- Multi-tier review priority classification (PRIORITY_1, PRIORITY_2, REVIEW, LOW)
+- Pearson Chi-Square calculation (1 df)
+- In-memory engine mock dataset filtering, ranking, comparison, and details
 """
 
 import unittest
@@ -18,7 +20,8 @@ from app.services.prr import (
     compute_chi_square_2x2,
     classify_signal_level,
     classify_signal_confidence,
-    classify_review_priority
+    classify_review_priority,
+    SignalDetectionEngine
 )
 
 
@@ -102,6 +105,56 @@ class TestPRREngine(unittest.TestCase):
         prr, _, _, _ = compute_prr_partition(a, b, c, d)
         self.assertEqual(classify_signal_level(prr), "LOW")
         self.assertEqual(classify_review_priority(prr, a, c), "LOW")
+
+    def test_classify_signal_level_thresholds(self):
+        self.assertEqual(classify_signal_level(None), "LOW")
+        self.assertEqual(classify_signal_level(1.99), "LOW")
+        self.assertEqual(classify_signal_level(2.0), "MODERATE")
+        self.assertEqual(classify_signal_level(3.99), "MODERATE")
+        self.assertEqual(classify_signal_level(4.0), "HIGH")
+
+    def test_classify_signal_confidence_thresholds(self):
+        self.assertEqual(classify_signal_confidence(4, 10), "LOW")
+        self.assertEqual(classify_signal_confidence(10, 4), "LOW")
+        self.assertEqual(classify_signal_confidence(5, 5), "MODERATE")
+        self.assertEqual(classify_signal_confidence(9, 10), "MODERATE")
+        self.assertEqual(classify_signal_confidence(10, 5), "HIGH")
+
+    def test_classify_review_priority_combinations(self):
+        self.assertEqual(classify_review_priority(None, 10, 10), "LOW")
+        self.assertEqual(classify_review_priority(4.5, 12, 6), "PRIORITY_1")
+        self.assertEqual(classify_review_priority(2.5, 6, 6), "PRIORITY_2")
+        self.assertEqual(classify_review_priority(3.0, 5, 2), "REVIEW")
+        self.assertEqual(classify_review_priority(1.8, 10, 10), "LOW")
+
+    def test_mock_engine_methods(self):
+        # Construct mock engine in memory
+        engine = SignalDetectionEngine()
+        engine.total_unique_reports = 1000
+        engine.drug_reports_count = {"ASPIRIN": 100, "IBUPROFEN": 200}
+        engine.event_reports_count = {"HEADACHE": 50, "GASTRITIS": 30}
+        engine.drug_event_pair_count = {
+            ("ASPIRIN", "GASTRITIS"): 20,
+            ("IBUPROFEN", "GASTRITIS"): 5,
+            ("ASPIRIN", "HEADACHE"): 10
+        }
+        engine.is_loaded = True
+
+        # Test calculate_prr
+        calc = engine.calculate_prr("ASPIRIN", "GASTRITIS")
+        self.assertEqual(calc["a"], 20)
+        self.assertEqual(calc["b"], 80)
+        self.assertGreater(calc["prr"], 1.0)
+
+        # Test detect_signals with filter
+        signals = engine.detect_signals(drug="ASPIRIN", min_prr=1.0, min_reports=1)
+        self.assertEqual(len(signals), 2)
+
+        # Test compare_drugs
+        comp = engine.compare_drugs("ASPIRIN", "IBUPROFEN", "GASTRITIS")
+        self.assertEqual(comp["adverse_event"], "GASTRITIS")
+        self.assertEqual(comp["drug_a"]["drug_name"], "ASPIRIN")
+        self.assertEqual(comp["drug_b"]["drug_name"], "IBUPROFEN")
 
 
 if __name__ == "__main__":

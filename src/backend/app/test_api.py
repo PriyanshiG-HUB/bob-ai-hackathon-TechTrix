@@ -1,16 +1,16 @@
 """
 Integration and Unit Tests for FastAPI Endpoints
 ================================================
-Tests:
+Comprehensive test suite verifying:
 - GET /health
 - GET /stats
-- GET /signals (with default and filtered query params)
-- GET /signals/{drug}/{event} (valid and 404 cases)
-- GET /compare (valid and 404 cases)
+- GET /signals (default, limit, drug filter, priority filter, invalid query params)
+- GET /signals/{drug}/{event} (valid, case-insensitive, 404 cases)
+- GET /compare (valid, 404 cases)
 - POST /submission/check (complete, partial, empty outlines)
-- GET /submission/{id} (valid and 404 cases)
-- GET /submission/{id}/gaps (all and priority-filtered)
-- GET /submission/{id}/modules/{module} (valid and 404 cases)
+- GET /submission/{id} (valid, 404 cases)
+- GET /submission/{id}/gaps (all, priority-filtered, 404 cases)
+- GET /submission/{id}/modules/{module} (valid, lowercase, digit, 404 cases)
 """
 
 import pytest
@@ -69,6 +69,25 @@ def test_signals_endpoint_filter_drug():
         assert sig["drug_name"] == "ASPIRIN"
 
 
+def test_signals_endpoint_filter_priority():
+    response = client.get("/signals?priority=PRIORITY_1&limit=5")
+    assert response.status_code == 200
+    data = response.json()
+    assert "signals" in data
+    for sig in data["signals"]:
+        assert sig["priority"] == "PRIORITY_1"
+
+
+def test_signals_endpoint_invalid_params():
+    # Negative min_prr
+    res_neg_prr = client.get("/signals?min_prr=-1.0")
+    assert res_neg_prr.status_code == 422
+
+    # Limit > 500
+    res_high_limit = client.get("/signals?limit=9999")
+    assert res_high_limit.status_code == 422
+
+
 def test_signal_detail_endpoint_valid():
     list_res = client.get("/signals?limit=1")
     assert list_res.status_code == 200
@@ -120,10 +139,6 @@ def test_compare_endpoint_not_found():
 # CTD SUBMISSION CHECKER API TESTS
 # -------------------------------------------------------------
 
-# Corrected SAMPLE_DOSSIER_TEXT aligned with ICH M4(R4):
-#   - 1.6 RMP is now optional; kept here to verify it does not break 100% score
-#   - M5: 5.3.3 = Human PK Studies (was incorrectly 5.3.2)
-#   - M5: 5.3.6 = Efficacy and Safety Studies (was incorrectly 5.3.5)
 SAMPLE_DOSSIER_TEXT = """
 1.1 Table of Contents
 1.2 Application Form
@@ -182,6 +197,11 @@ def test_get_submission_result_endpoint():
     assert data["readiness_status"] == "NOT_READY"
 
 
+def test_get_submission_result_not_found():
+    response = client.get("/submission/NON_EXISTENT_SUBMISSION_ID")
+    assert response.status_code == 404
+
+
 def test_get_submission_gaps_endpoint():
     # Submit with missing sections
     payload = {"dossier_text": "1.1 TOC", "submission_id": "test-sub-gaps"}
@@ -202,11 +222,16 @@ def test_get_submission_gaps_endpoint():
         assert g["priority"] == "CRITICAL"
 
 
+def test_get_submission_gaps_not_found():
+    response = client.get("/submission/NON_EXISTENT_SUBMISSION_ID/gaps")
+    assert response.status_code == 404
+
+
 def test_get_module_detail_endpoint():
     payload = {"dossier_text": "3.1 TOC\n3.2.S Drug Substance\n3.2.P Drug Product", "submission_id": "test-sub-m3"}
     client.post("/submission/check", json=payload)
     
-    # Check M3 details
+    # Check M3 details with uppercase
     m3_res = client.get("/submission/test-sub-m3/modules/M3")
     assert m3_res.status_code == 200
     data = m3_res.json()
@@ -214,6 +239,15 @@ def test_get_module_detail_endpoint():
     assert data["completeness_percentage"] == 100.0
     assert data["present_required_count"] == 3
     
+    # Check M3 details with digit "3"
+    m3_digit_res = client.get("/submission/test-sub-m3/modules/3")
+    assert m3_digit_res.status_code == 200
+
     # Check invalid module 404
     bad_res = client.get("/submission/test-sub-m3/modules/M99")
     assert bad_res.status_code == 404
+
+
+def test_get_module_detail_not_found():
+    response = client.get("/submission/NON_EXISTENT_SUBMISSION_ID/modules/M1")
+    assert response.status_code == 404
