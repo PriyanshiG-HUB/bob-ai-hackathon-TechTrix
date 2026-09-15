@@ -1,0 +1,294 @@
+{
+  "guidance": "ICH M4(R4) Common Technical Document for the Registration of Pharmaceuticals for Human Use",
+  "version": "M4(R4)",
+  "disclaimer": "This structure is derived from ICH M4 guidelines for structural completeness verification. Structural compliance does not constitute or guarantee regulatory approval or scientific adequacy by the FDA, EMA, PMDA, or any other authority.",
+  "modules": [
+    {
+      "module_id": "M1",
+      "module_name": "Module 1: Administrative Information and Prescribing Information",
+      "description": "Region-specific administrative documentation, application forms, and prescribing information.",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "Comprehensive Table of Contents",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Enables regulatory navigability across the entire administrative dossier."
+        },
+        {
+          "section_id": "1.2",
+          "title": "Application Form / Administrative Information",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Mandatory legal application form establishing applicant identity and submission intent (e.g. FDA Form 356h)."
+        },
+        {
+          "section_id": "1.3",
+          "title": "Prescribing Information / Product Labeling",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Contains proposed package insert, summary of product characteristics (SmPC), and patient information leaflet."
+        },
+        {
+          "section_id": "1.4",
+          "title": "Information about the Experts",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Expert CVs and declarations of nonclinical, clinical, and quality oversight (regional requirement in EU/others)."
+        },
+        {
+          "section_id": "1.5",
+          "title": "Environmental Risk Assessment",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Environmental assessment or categorical exclusion documentation. Required for GMOs and certain biological products depending on jurisdiction."
+        },
+        {
+          "section_id": "1.6",
+          "title": "Risk Management Plan (RMP) / REMS",
+          "is_required": false,
+          "priority_if_missing": "HIGH",
+          "importance": "Region-specific pharmacovigilance and risk mitigation strategy. RMP is required by the EU (Regulation (EU) No 536/2014); REMS is required by the US FDA under FDAAA. Not a universal ICH M4(R4) requirement — applicability depends on regulatory jurisdiction and product risk profile."
+        }
+      ]
+    },
+    {
+      "module_id": "M2",
+      "module_name": "Module 2: Common Technical Document Summaries",
+      "description": "High-level overview and summaries of Quality, Nonclinical, and Clinical data.",
+      "sections": [
+        {
+          "section_id": "2.1",
+          "title": "CTD Table of Contents",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Master index of Modules 2 through 5."
+        },
+        {
+          "section_id": "2.2",
+          "title": "CTD Introduction",
+          "is_required": true,
+          "priority_if_missing": "HIGH",
+          "importance": "Brief summary of the pharmacological class, mode of action, and proposed clinical indications."
+        },
+        {
+          "section_id": "2.3",
+          "title": "Quality Overall Summary (QOS)",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "High-level summary of drug substance, drug product, and manufacturing control strategy."
+        },
+        {
+          "section_id": "2.4",
+          "title": "Nonclinical Overview",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Integrated, critical evaluation of pharmacology, pharmacokinetics, and toxicology findings."
+        },
+        {
+          "section_id": "2.5",
+          "title": "Clinical Overview",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Critical analysis of clinical development, benefit-risk profile, and clinical efficacy/safety justification."
+        },
+        {
+          "section_id": "2.6",
+          "title": "Nonclinical Written and Tabulated Summaries (2.6.1\u20132.6.7)",
+          "is_required": true,
+          "priority_if_missing": "HIGH",
+          "importance": "Comprehensive written and tabulated summaries of nonclinical pharmacology, PK, and toxicology (subsections 2.6.1 Introduction through 2.6.7 Toxicology Tabulated Summary)."
+        },
+        {
+          "section_id": "2.7",
+          "title": "Clinical Summary (2.7.1\u20132.7.6)",
+          "is_required": true,
+          "priority_if_missing": "HIGH",
+          "importance": "Detailed summary of biopharmaceutic, clinical pharmacology, efficacy, and clinical safety studies (subsections 2.7.1 Biopharmaceutic Studies through 2.7.6 Synopses of Individual Studies)."
+        }
+      ]
+    },
+    {
+      "module_id": "M3",
+      "module_name": "Module 3: Quality (Chemistry, Manufacturing, and Controls)",
+      "description": "Chemical, pharmaceutical, and biological documentation for substance and product.",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "Module 3 Table of Contents",
+          "is_required": true,
+          "priority_if_missing": "HIGH",
+          "importance": "Index of Quality sections."
+        },
+        {
+          "section_id": "3.2",
+          "title": "Body of Data",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Parent container grouping 3.2.S, 3.2.P, 3.2.A, and 3.2.R. Structural hierarchy node; individual sub-sections carry their own required status."
+        },
+        {
+          "section_id": "3.2.S",
+          "title": "Drug Substance (General Info, Manufacture, Characterisation, Control, Stability)",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Mandatory CMC data regarding active pharmaceutical ingredient synthesis, impurities, specifications, and stability."
+        },
+        {
+          "section_id": "3.2.P",
+          "title": "Drug Product (Description, Composition, Manufacture, Excipients, Control, Stability)",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Mandatory CMC documentation covering dosage form formulation, batch formula, release specifications, and shelf-life."
+        },
+        {
+          "section_id": "3.2.A",
+          "title": "Appendices (Facilities and Equipment, Adventitious Agents Safety)",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Required for biologicals, sterile manufacturing, or novel excipients."
+        },
+        {
+          "section_id": "3.2.R",
+          "title": "Regional Information",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Region-specific CMC attachments (process validation master plans, medical device information)."
+        },
+        {
+          "section_id": "3.3",
+          "title": "Literature References",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Quality literature bibliography."
+        }
+      ]
+    },
+    {
+      "module_id": "M4",
+      "module_name": "Module 4: Nonclinical Study Reports",
+      "description": "Full nonclinical pharmacology, pharmacokinetics, and toxicology study reports.",
+      "sections": [
+        {
+          "section_id": "4.1",
+          "title": "Module 4 Table of Contents",
+          "is_required": true,
+          "priority_if_missing": "HIGH",
+          "importance": "Index of nonclinical study reports."
+        },
+        {
+          "section_id": "4.2",
+          "title": "Study Reports",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Parent container grouping 4.2.1 Pharmacology, 4.2.2 Pharmacokinetics, and 4.2.3 Toxicology. Structural hierarchy node; individual sub-sections carry their own required status."
+        },
+        {
+          "section_id": "4.2.1",
+          "title": "Pharmacology (Primary, Secondary, Safety, Pharmacodynamic Interactions)",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Fundamental proof-of-concept and safety pharmacology evaluating cardiovascular, respiratory, and CNS effects."
+        },
+        {
+          "section_id": "4.2.2",
+          "title": "Pharmacokinetics (Absorption, Distribution, Metabolism, Excretion)",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "ADME characterization, exposure levels, and metabolic pathways across animal models."
+        },
+        {
+          "section_id": "4.2.3",
+          "title": "Toxicology (Single-dose, Repeat-dose, Genotoxicity, Carcinogenicity, Reproductive)",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Essential safety profile identifying target organ toxicity, no-observed-adverse-effect levels (NOAEL), and mutagenic risk."
+        },
+        {
+          "section_id": "4.3",
+          "title": "Literature References",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Nonclinical bibliography."
+        }
+      ]
+    },
+    {
+      "module_id": "M5",
+      "module_name": "Module 5: Clinical Study Reports",
+      "description": "Full reports of human clinical trials, bioequivalence, and post-marketing experience.",
+      "sections": [
+        {
+          "section_id": "5.1",
+          "title": "Module 5 Table of Contents",
+          "is_required": true,
+          "priority_if_missing": "HIGH",
+          "importance": "Index of clinical study reports."
+        },
+        {
+          "section_id": "5.2",
+          "title": "Tabular Listing of All Clinical Studies",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Master inventory of Phase 1-3 clinical trials providing study design, population, and registration numbers."
+        },
+        {
+          "section_id": "5.3.1",
+          "title": "Reports of Biopharmaceutic Studies",
+          "is_required": false,
+          "priority_if_missing": "HIGH",
+          "importance": "In vivo BA/BE and in vitro dissolution profiles. Required for most solid oral dosage forms; may not apply to parenteral biologics or certain other routes of administration."
+        },
+        {
+          "section_id": "5.3.2",
+          "title": "Reports of Studies Pertinent to PK Using Human Biomaterials",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "In vitro studies using human-derived materials (e.g. plasma protein binding, metabolic profiling using human liver microsomes, P450 reaction phenotyping)."
+        },
+        {
+          "section_id": "5.3.3",
+          "title": "Reports of Human PK Studies",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Establishes human ADME, dosing regimen rationale, initial tolerability, and special population clearance adjustments (hepatic/renal impairment, drug interactions)."
+        },
+        {
+          "section_id": "5.3.4",
+          "title": "Reports of Human PD Studies",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Evaluates biomarker response, target engagement, and pharmacodynamic endpoints in human subjects."
+        },
+        {
+          "section_id": "5.3.5",
+          "title": "Reports of Human PK/PD Studies",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Dose-concentration-response modeling; includes controlled (5.3.5.1) and uncontrolled (5.3.5.2) dose-response studies."
+        },
+        {
+          "section_id": "5.3.6",
+          "title": "Reports of Efficacy and Safety Studies",
+          "is_required": true,
+          "priority_if_missing": "CRITICAL",
+          "importance": "Core pivotal trial evidence demonstrating statistically significant therapeutic benefit and clinical safety (controlled and uncontrolled clinical studies, Phase 2/3 reports)."
+        },
+        {
+          "section_id": "5.3.7",
+          "title": "Post-Marketing Experience Reports",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Periodic safety update reports (PSUR) or commercial surveillance data if the product is already approved in other jurisdictions."
+        },
+        {
+          "section_id": "5.4",
+          "title": "Literature References",
+          "is_required": false,
+          "priority_if_missing": "MEDIUM",
+          "importance": "Clinical bibliography."
+        }
+      ]
+    }
+  ]
+}
