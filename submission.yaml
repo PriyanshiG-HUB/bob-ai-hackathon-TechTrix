@@ -10,7 +10,7 @@
 
 team:
   name: "TechTrix"                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  track: "AI"                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
     name: "Hiteshree Chauhan"                           # REQUIRED — e.g., "Alice Chen"
     email: "24it008@charusat.edu.in"                          # REQUIRED — e.g., "alice.chen@ibm.com"
