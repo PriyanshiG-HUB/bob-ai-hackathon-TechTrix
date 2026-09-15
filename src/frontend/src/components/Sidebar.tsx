@@ -32,7 +32,7 @@ export default function Sidebar() {
       <div className={styles.brand}>
         <MagnifyingGlass size={20} weight="bold" className={styles.brandIcon} />
         <div className={styles.brandText}>
-          <span className={styles.brandName}>AetherGuard AI</span>
+          <span className={styles.brandName}>PHARMASENTINEL AI</span>
           <span className={styles.brandSub}>Pharmacovigilance</span>
         </div>
       </div>

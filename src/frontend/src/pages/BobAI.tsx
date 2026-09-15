@@ -26,7 +26,7 @@ export default function BobAIPage() {
     {
       role: 'assistant',
       content:
-        'Hello. I am Bob AI, backed by the AetherGuard AI pharmacovigilance and ICH M4 regulatory readiness engine. Ask me about statistical safety signals (PRR/χ²), dataset metrics, submission completeness, or gap remediation.',
+        'Hello. I am Bob AI, backed by the PHARMASENTINEL AI pharmacovigilance and ICH M4 regulatory readiness engine. Ask me about statistical safety signals (PRR/χ²), dataset metrics, submission completeness, or gap remediation.',
       ts: new Date(),
     },
   ])

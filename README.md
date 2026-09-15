@@ -1,4 +1,4 @@
-# AetherGuard AI
+# PHARMASENTINEL AI
 
 > An AI-powered pharmaceutical safety signal detection and regulatory submission readiness platform for pharmacovigilance teams.
 
@@ -136,7 +136,7 @@ Interactive docs: `http://localhost:8000/docs`
 
 ## Model Context Protocol (MCP) Server
 
-AetherGuard AI provides a standards-compliant MCP Server (`src/mcp_server/server.py`) exposing 6 validated tools for integration with AI assistants (e.g. IBM Bob):
+PHARMASENTINEL AI provides a standards-compliant MCP Server (`src/mcp_server/server.py`) exposing 6 validated tools for integration with AI assistants (e.g. IBM Bob):
 
 1. `get_system_stats` — Retrieve FAERS 2026 Q1 dataset universe metrics ($N=397,209$).
 2. `get_signals` — Retrieve ranked statistical safety signals filtered by active ingredient or priority.
@@ -360,6 +360,6 @@ npm run build
 
 | Field | Value |
 |-------|-------|
-| **Project** | AetherGuard AI |
+| **Project** | PHARMASENTINEL AI |
 | **Repository** | [PriyanshiG-HUB/bob-ai-hackathon-TechTrix](https://github.com/PriyanshiG-HUB/bob-ai-hackathon-TechTrix) |
 

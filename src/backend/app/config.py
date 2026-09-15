@@ -10,7 +10,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "AetherGuard AI - FDA FAERS Safety Signal Detection"
+    PROJECT_NAME: str = "PHARMASENTINEL AI - FDA FAERS Safety Signal Detection"
     VERSION: str = "1.0.0"
     API_PREFIX: str = "/api/v1"
     
