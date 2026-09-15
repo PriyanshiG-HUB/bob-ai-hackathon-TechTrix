@@ -308,5 +308,42 @@ async def get_module_detail(
             status_code=404,
             detail=f"Module '{module}' not found. Valid modules are M1, M2, M3, M4, M5."
         )
-        
     return ModuleScore(**mod_scores[mod_clean])
+
+from app.services.bob_chat import (
+    BobChatRequest,
+    BobChatResponse,
+    route_bob_chat
+)
+
+
+# =====================================================================
+# BOB AI CONVERSATION BRIDGE ENDPOINTS
+# =====================================================================
+
+@app.post(
+    "/bob/chat",
+    response_model=BobChatResponse,
+    tags=["Bob AI Assistant"],
+    summary="Bob AI Conversational Assistant Bridge",
+    description=(
+        "Processes natural language inquiries regarding pharmacovigilance safety signals, "
+        "2x2 contingency tables, PRR metrics, ICH M4 CTD submission readiness, and regulatory gaps "
+        "by routing to existing validated AetherGuard tools."
+    )
+)
+async def bob_chat_endpoint(
+    payload: BobChatRequest = Body(...)
+):
+    try:
+        response = route_bob_chat(
+            message=payload.message,
+            dossier_text=payload.dossier_text,
+            submission_id=payload.submission_id
+        )
+        return response
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred while processing your request: {str(exc)}"
+        )

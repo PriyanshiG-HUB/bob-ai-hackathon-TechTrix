@@ -1,0 +1,125 @@
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table thead tr {
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  padding: 9px 14px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--gray-700);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.row {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.row:hover td {
+  background: var(--accent-pale);
+}
+
+.row:focus-visible td:first-child {
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.num {
+  text-align: right !important;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.drug {
+  max-width: 200px;
+}
+
+.drugName {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.event {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prr {
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+/* Confidence labels */
+.conf {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.HIGH     { color: var(--ready); }
+.MODERATE { color: var(--priority-2); }
+.LOW      { color: var(--gray-400); }
+
+/* Empty */
+.empty {
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 13px;
+}
+
+/* Skeleton */
+.skeletonRow td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.skeletonCell {
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-150) 50%, var(--gray-100) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  min-width: 60px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

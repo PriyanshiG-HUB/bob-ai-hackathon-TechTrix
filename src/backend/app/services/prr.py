@@ -564,7 +564,7 @@ class SignalDetectionEngine:
         threshold_met = (prr_val is not None and prr_val >= min_prr and a >= min_reports)
         
         interpretation = (
-            f"The association between {calc['drug']} and {calc['event']} demonstrates an observed count of "
+            f"The drug-event pair shows a statistical disproportionality signal for {calc['drug']} and {calc['event']} with an observed count of "
             f"A = {a} unique reports with a Proportional Reporting Ratio (PRR) of {prr_val if prr_val is not None else 'Undefined'} "
             f"(Drug Event Rate: {calc['drug_event_rate']}, Background Event Rate: {calc['background_event_rate']}, "
             f"Chi-Square: {calc['chi_square']}). "
@@ -573,6 +573,7 @@ class SignalDetectionEngine:
             f"(Sparse Background: {calc['sparse_background']}). "
             f"DISCLAIMER: {MEDICAL_DISCLAIMER}"
         )
+
         
         return {
             "drug_name": calc["drug"],

@@ -1,0 +1,116 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 360px;
+}
+
+.table th,
+.table td {
+  padding: 0;
+  border: 1px solid var(--border);
+}
+
+.corner {
+  background: var(--gray-50);
+  width: 120px;
+}
+
+.colHead {
+  text-align: center;
+  padding: 8px 16px;
+  background: var(--gray-50);
+  font-weight: 600;
+  color: var(--gray-600);
+  min-width: 120px;
+}
+
+.rowHead {
+  text-align: right;
+  padding: 8px 12px;
+  background: var(--gray-50);
+  font-weight: 600;
+  color: var(--gray-600);
+  max-width: 140px;
+}
+
+.eventLabel  { color: var(--priority-1); }
+.otherLabel  { color: var(--gray-500); }
+.drugLabel   { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--accent); }
+.otherDrugLabel { color: var(--gray-500); }
+
+/* Cells */
+.cellA, .cellB, .cellC, .cellD {
+  text-align: center;
+  padding: 12px 20px;
+  display: table-cell;
+}
+
+.cellA { background: #fef2f2; }
+.cellB { background: var(--gray-50); }
+.cellC { background: #fff7ed; }
+.cellD { background: var(--gray-50); }
+
+.cellLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gray-400);
+  margin-bottom: 4px;
+}
+
+.cellValue {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gray-900);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Legend */
+.legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.legendItem {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 11.5px;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+
+.cellA2, .cellB2, .cellC2, .cellD2 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cellA2 { background: #fef2f2; color: var(--priority-1); }
+.cellB2 { background: var(--gray-100); color: var(--gray-600); }
+.cellC2 { background: #fff7ed; color: var(--priority-2); }
+.cellD2 { background: var(--gray-100); color: var(--gray-500); }

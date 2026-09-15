@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "aetherguard-ai": {
+      "command": "python",
+      "args": ["<ABSOLUTE_PATH_TO_REPO>/src/mcp_server/server.py"],
+      "cwd": "<ABSOLUTE_PATH_TO_REPO>",
+      "env": {
+        "PYTHONPATH": "<ABSOLUTE_PATH_TO_REPO>/src/backend"
+      },
+      "alwaysAllow": [
+        "get_system_stats",
+        "get_signals",
+        "get_signal_detail",
+        "check_submission",
+        "get_gap_report",
+        "get_submission_module"
+      ],
+      "disabled": false
+    }
+  }
+}

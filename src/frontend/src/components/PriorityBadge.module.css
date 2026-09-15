@@ -1,0 +1,62 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.sm {
+  font-size: 10px;
+  padding: 1px 6px;
+}
+
+/* Priority tiers */
+.PRIORITY1 {
+  background: var(--priority-1-bg);
+  color: var(--priority-1);
+  border-color: var(--priority-1-border);
+}
+
+.PRIORITY2 {
+  background: var(--priority-2-bg);
+  color: var(--priority-2);
+  border-color: var(--priority-2-border);
+}
+
+.REVIEW {
+  background: var(--review-bg);
+  color: var(--review);
+  border-color: var(--review-border);
+}
+
+.LOW {
+  background: var(--low-bg);
+  color: var(--low);
+  border-color: var(--low-border);
+}
+
+/* Gap priorities */
+.CRITICAL {
+  background: var(--critical-bg);
+  color: var(--critical);
+  border-color: var(--priority-1-border);
+}
+
+.HIGH {
+  background: var(--high-bg);
+  color: var(--high);
+  border-color: var(--priority-2-border);
+}
+
+.MEDIUM {
+  background: #eff6ff;
+  color: var(--medium);
+  border-color: #bfdbfe;
+}

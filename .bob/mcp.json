@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "aetherguard-ai": {
+      "command": "python",
+      "args": ["D:\\bob-ai-hackathon-TechTrix\\src\\mcp_server\\server.py"],
+      "cwd": "D:\\bob-ai-hackathon-TechTrix",
+      "env": {
+        "PYTHONPATH": "D:\\bob-ai-hackathon-TechTrix\\src\\backend"
+      },
+      "alwaysAllow": [
+        "get_system_stats",
+        "get_signals",
+        "get_signal_detail",
+        "check_submission",
+        "get_gap_report",
+        "get_submission_module"
+      ],
+      "disabled": false
+    }
+  }
+}
