@@ -220,10 +220,14 @@ class SignalDetectionEngine:
         if not self.data_path:
             raise ValueError("No data path specified for SignalDetectionEngine.")
             
-        # Determine cache path next to CSV
+        # Determine cache path next to CSV or from settings
         if cache_path is None:
-            csv_dir = Path(self.data_path).parent
-            cache_path = str(csv_dir / "prr_index_2026Q1.pkl")
+            try:
+                from app.config import settings
+                cache_path = settings.INDEX_CACHE_PATH
+            except Exception:
+                csv_dir = Path(self.data_path).parent
+                cache_path = str(csv_dir / "prr_index_2026Q1.pkl")
             
         if os.path.exists(cache_path):
             logger.info(f"Loading precomputed PRR index from compact cache: {cache_path}...")
@@ -633,8 +637,12 @@ def get_engine(data_path: Optional[str] = None) -> SignalDetectionEngine:
     global _default_engine
     if _default_engine is None or not _default_engine.is_loaded:
         if data_path is None:
-            project_root = Path(__file__).resolve().parents[4]
-            data_path = str(project_root / "data" / "processed" / "faers_2026Q1_normalized.csv")
+            try:
+                from app.config import settings
+                data_path = settings.NORMALIZED_DATA_PATH
+            except Exception:
+                project_root = Path(__file__).resolve().parents[4]
+                data_path = str(project_root / "data" / "processed" / "faers_2026Q1_normalized.csv")
         _default_engine = SignalDetectionEngine(data_path)
         _default_engine.load_signal_data()
     return _default_engine

@@ -48,7 +48,7 @@ export default function Dashboard() {
     <div className={styles.page}>
       <TopBar
         title="Dashboard"
-        subtitle="FDA AEMS/FAERS 2026 Q1 — Pharmacovigilance Overview"
+        subtitle="FDA AEMS/FAERS 2025 Q1 – 2026 Q2 — Pharmacovigilance Overview"
         actions={
           <button className={styles.btn} onClick={() => navigate('/signals')}>
             View All Signals

@@ -239,7 +239,7 @@ def route_bob_chat(
             )
 
         lines = [
-            f"**AetherGuard Safety Signals (FDA AEMS/FAERS 2026 Q1)**\n",
+            f"**AetherGuard Safety Signals (FDA AEMS/FAERS {settings.REPORTING_PERIOD})**\n",
             f"Filters applied: **Drug**: `{drug_name or 'All'}` | **Priority**: `{priority_filter or 'All'}`\n"
         ]
         for i, s in enumerate(signals[:10], 1):

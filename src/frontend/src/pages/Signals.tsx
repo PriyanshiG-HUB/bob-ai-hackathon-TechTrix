@@ -63,7 +63,7 @@ export default function SignalsPage() {
     <div className={styles.page}>
       <TopBar
         title="Safety Signals"
-        subtitle="Statistical disproportionality signals from FDA AEMS/FAERS 2026 Q1"
+        subtitle="Statistical disproportionality signals from FDA AEMS/FAERS 2025 Q1 – 2026 Q2"
         actions={
           <span className={styles.count}>
             {loading ? '…' : `${totalReturned.toLocaleString()} signals`}

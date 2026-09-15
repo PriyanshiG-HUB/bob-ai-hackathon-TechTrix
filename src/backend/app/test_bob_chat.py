@@ -26,7 +26,7 @@ def test_bob_chat_system_stats():
     data = response.json()
     assert data["intent"] == "system_stats"
     assert data["tool_used"] == "get_system_stats"
-    assert "397,209" in data["response"]
+    assert "2,437,039" in data["response"]
     assert "disclaimer" in data
     assert "statistical disproportionality" in data["disclaimer"].lower()
 
@@ -64,23 +64,23 @@ def test_bob_chat_signal_detail():
     assert d is not None
     assert d["drug_name"] == "MEDROXYPROGESTERONE ACETATE"
     assert d["adverse_event"] == "Meningioma"
-    assert d["a"] == 1194
-    assert d["b"] == 302
-    assert d["c"] == 87
-    assert d["d"] == 395626
-    assert pytest.approx(d["prr"], 0.01) == 3630.23
-    assert pytest.approx(d["chi_square"], 0.01) == 295169.73
+    assert d["a"] == 11336
+    assert d["b"] == 1608
+    assert d["c"] == 502
+    assert d["d"] == 2423593
+    assert pytest.approx(d["prr"], 0.01) == 4229.00
+    assert pytest.approx(d["chi_square"], 0.01) == 2041887.44
     assert d["priority"] == "PRIORITY_1"
     assert d["confidence"] == "HIGH"
 
     # 2. Check formatted response string contains the exact matching metrics and no conflicting numbers
     resp = data["response"]
-    assert "1,194" in resp
-    assert "302" in resp
-    assert "87" in resp
-    assert "395,626" in resp
-    assert "3630.23" in resp
-    assert "295169.73" in resp
+    assert "11,336" in resp
+    assert "1,608" in resp
+    assert "502" in resp
+    assert "2,423,593" in resp
+    assert "4229.00" in resp
+    assert "2041887.44" in resp
     assert "PRIORITY_1" in resp
 
 

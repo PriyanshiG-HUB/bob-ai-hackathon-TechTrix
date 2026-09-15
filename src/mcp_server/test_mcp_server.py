@@ -138,8 +138,8 @@ class TestGetSignals(unittest.TestCase):
             self.assertNotIn("[REVIEW]", text)
 
     def test_no_results_returns_friendly_message(self):
-        # An extremely high PRR threshold that should produce no results
-        result = run(_tool_get_signals({"min_prr": 999999.0, "limit": 1}))
+        # A non-existent drug filter that should produce no results
+        result = run(_tool_get_signals({"drug": "NON_EXISTENT_DRUG_XYZ_12345", "limit": 1}))
         text = result[0].text
         self.assertIn("No signals found", text)
 

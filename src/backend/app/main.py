@@ -100,8 +100,8 @@ async def get_dataset_stats():
         unique_active_ingredients=len(engine.drug_reports_count),
         unique_reactions=len(engine.event_reports_count),
         candidate_drug_event_pairs=len(engine.drug_event_pair_count),
-        total_normalized_associations=10085069,
-        suspect_associations=5785411,
+        total_normalized_associations=settings.TOTAL_NORMALIZED_ASSOCIATIONS,
+        suspect_associations=settings.SUSPECT_ASSOCIATIONS,
         disclaimer=MEDICAL_DISCLAIMER
     )
 

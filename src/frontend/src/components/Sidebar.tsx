@@ -60,7 +60,7 @@ export default function Sidebar() {
       </nav>
 
       <div className={styles.footer}>
-        <span className={styles.footerBadge}>FDA FAERS 2026 Q1</span>
+        <span className={styles.footerBadge}>FDA FAERS 2025 Q1 – 2026 Q2</span>
       </div>
     </aside>
   )

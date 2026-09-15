@@ -119,7 +119,7 @@ def get_system_stats() -> str:
         engine = _get_engine()
         lines = [
             "AetherGuard AI — Dataset Statistics",
-            "Source: FDA AEMS/FAERS 2026 Q1 (January – March 2026)",
+            f"Source: FDA AEMS/FAERS {settings.REPORTING_PERIOD}",
             "",
             f"Unique suspect reports:       {engine.total_unique_reports:>12,}",
             f"Unique active ingredients:    {len(engine.drug_reports_count):>12,}",
@@ -189,7 +189,7 @@ def get_signals(
             return msg
 
         lines = [
-            "AetherGuard Safety Signals — FDA AEMS/FAERS 2026 Q1",
+            f"AetherGuard Safety Signals — FDA AEMS/FAERS {settings.REPORTING_PERIOD}",
             f"Filters: drug={drug or 'all'}, min_prr={min_prr}, "
             f"min_reports={min_reports}, priority={priority or 'all'}, limit={limit}",
             f"Results: {len(signals)} signal(s) returned",
