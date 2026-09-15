@@ -13,47 +13,64 @@ team:
   track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
     name: "Hiteshree Chauhan"                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    email: "24it008@charusat.edu.in"                          # REQUIRED — e.g., "alice.chen@ibm.com"
   members:
     - name: "Rena Naik"                         # REQUIRED — Team member 1
-      email: ""
+      email: "24ce066@charusat.edu.in"
     - name: "Priyanshi Gajiwala"                         # Add more members by copying the two lines above
-      email: ""
+      email: "24it019@charusat.edu.in"
     - name: "Satvi Akola"
-      email: ""
+      email: "24ce001@charusat.edu.in"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "PharmaSentinel AI"                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+    Pharmaceutical safety teams and regulatory submission teams face large
+    volumes of complex data that are difficult and time-consuming to review
+    manually. Adverse-event databases can hide emerging drug safety signals,
+    while incomplete CTD dossiers can lead to regulatory delays, costly
+    rework, and missed submission requirements.
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+    PharmaSentinel AI is a dual-mode pharmaceutical intelligence solution
+    that detects potential drug safety signals from adverse-event reports
+    using clustering and Proportional Reporting Ratio (PRR) analysis, while
+    also checking regulatory submission readiness against ICH M4 CTD
+    requirements. It provides safety-signal insights, module-wise
+    completeness scores, and an actionable gap report to support faster
+    review and submission preparation.
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+    - "Adverse-event report clustering to identify groups and emerging safety patterns"                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
+    - "PRR-based statistical signal detection to flag potential drug-event associations"
+    - "ICH M4 CTD-based dossier completeness checking across the five CTD modules"
+    - "Module-wise submission readiness scoring with missing-section identification"                               # optional 4th
+    - "Actionable gap reports highlighting regulatory documentation areas requiring attention"                               # optional 5th
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python"]                      # REQUIRED — e.g., ["Python", "TypeScript"]
+    frameworks: ["FastAPI", "React"]                     # e.g., ["FastAPI", "React"]
+    ibm_technologies: ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
+    databases: ["SQLite"]                      # e.g., ["PostgreSQL", "Redis"]
+    other: ["Docker", "GitHub Actions", "Slack API"]                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+    We are most proud of combining two high-impact pharmaceutical workflows
+    into a single solution: statistical drug-safety signal detection and
+    regulatory submission readiness. Instead of requiring teams to manually
+    inspect large volumes of safety data and lengthy regulatory checklists,
+    PharmaSentinel AI converts complex information into interpretable signals,
+    readiness scores, and actionable gaps.
 
   known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
+    The solution is intended as a decision-support and screening tool rather
+    than a replacement for qualified pharmacovigilance or regulatory experts.
+    Signal detection results require appropriate clinical and statistical
+    review, and the submission checker depends on the completeness and
+    structure of the provided dossier outline. Additional validation on
+    larger real-world datasets and integration with production regulatory
+    systems would be required for deployment in a regulated environment.
 
 # =============================================================================
 # ARTIFACT LOCATIONS
