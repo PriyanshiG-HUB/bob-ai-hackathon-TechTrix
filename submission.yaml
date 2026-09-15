@@ -49,11 +49,11 @@ submission:
     - "Actionable gap reports highlighting regulatory documentation areas requiring attention"                               # optional 5th
 
   tech_stack:
-    languages: ["Python"]                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: ["FastAPI", "React"]                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
+    languages: ["Python 3.11+", "TypeScript"]                      # REQUIRED — e.g., ["Python", "TypeScript"]
+    frameworks: ["FastAPI", "React 19"]                     # e.g., ["FastAPI", "React"]
+    ibm_technologies: ["watsonx.ai", "IBM Bob", "IBM Cloud Functions","Model Context Protocol (MCP)"]               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
     databases: ["SQLite"]                      # e.g., ["PostgreSQL", "Redis"]
-    other: ["Docker", "GitHub Actions", "Slack API"]                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    other: ["Pandas", "NumPy", "SciPy", "Pytest", "Vite", "React Router DOM", "Axios", "Phosphor Icons", "Docker", "GitHub Actions"]                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
     We are most proud of combining two high-impact pharmaceutical workflows
@@ -81,6 +81,5 @@ artifacts:
   setup_guide: "docs/setup-guide.md"
   architecture_doc: "docs/architecture.md"
   demo_video: "demo/demo-video-link.txt"   # URL to hosted video (YouTube, Loom, Box)
-  live_demo: "demo/live-demo-url.txt"      # URL to deployed demo (optional)
   screenshots: "demo/screenshots/"
   presentation: "presentation/"
