@@ -70,8 +70,8 @@ FDA AEMS/FAERS 2026 Q1 (raw ASCII files)
    Compact PRR Index (~8.8 MB .pkl)
               ↓
        FastAPI Backend
-              ↓
-    React Frontend  ←→  Bob AI / MCP [PLANNED]
+       ↙             ↘
+React Bob AI UI    IBM Bob MCP Server (6 Tools)
 ```
 
 ### CTD Readiness Pipeline
@@ -91,15 +91,13 @@ CTD Dossier Outline (text / TOC)
    Prioritized Gap Report
               ↓
        FastAPI Backend
-              ↓
-  React Frontend / Bob AI [PLANNED]
+       ↙             ↘
+React Frontend     Bob AI Chat Bridge / MCP
 ```
-
-> **IBM Bob / MCP integration** is **PLANNED** and not yet implemented in this release.
 
 ---
 
-## Backend API
+## Backend API & Bob AI Bridge
 
 Base URL (local): `http://localhost:8000`  
 Interactive docs: `http://localhost:8000/docs`
@@ -127,6 +125,28 @@ Interactive docs: `http://localhost:8000/docs`
 | `GET` | `/submission/{submission_id}` | Retrieve a previously evaluated submission result by ID. |
 | `GET` | `/submission/{submission_id}/gaps` | Retrieve the gap report for a submission; optionally filter by priority (`CRITICAL`, `HIGH`, `MEDIUM`). |
 | `GET` | `/submission/{submission_id}/modules/{module}` | Retrieve detailed completeness data for a single CTD module (`M1`–`M5`). |
+
+### Bob AI Conversational Chat Bridge
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/bob/chat` | Deterministic local tool-orchestration bridge answering conversational queries on dataset stats, safety signals, 2×2 contingency tables, PRR/χ² statistics, CTD readiness, and gap remediation without hallucinations. |
+
+---
+
+## Model Context Protocol (MCP) Server
+
+AetherGuard AI provides a standards-compliant MCP Server (`src/mcp_server/server.py`) exposing 6 validated tools for integration with AI assistants (e.g. IBM Bob):
+
+1. `get_system_stats` — Retrieve FAERS 2026 Q1 dataset universe metrics ($N=397,209$).
+2. `get_signals` — Retrieve ranked statistical safety signals filtered by active ingredient or priority.
+3. `get_signal_detail` — Retrieve exact 2×2 contingency metrics, PRR, χ², and confidence for a drug–event pair.
+4. `check_submission` — Evaluate a raw text or TOC outline against ICH M4(R4) CTD requirements.
+5. `get_gap_report` — Query missing required CTD sections categorized by priority (`CRITICAL`, `HIGH`, `MEDIUM`).
+6. `get_submission_module` — Retrieve granular completeness scores and section status for Modules M1–M5.
+
+Configuration template is available at [`.bob/mcp.json`](.bob/mcp.json) and [`src/mcp_server/mcp_config_template.json`](src/mcp_server/mcp_config_template.json).
+
 
 ---
 
@@ -159,23 +179,17 @@ Raw FAERS/AEMS quarterly ASCII files (`data/raw/faers/`) and large generated pro
 
 ## Testing
 
-All tests are located in [`src/backend/`](src/backend/) and run with `pytest`.
+All backend and MCP tests are validated with `pytest`, and the frontend is validated with TypeScript & Vite build checks.
 
-| Suite | File | Result |
-|-------|------|--------|
-| PRR Signal Detection | `app/services/test_prr.py` | **8 / 8 passed** ✅ |
-| CTD Checker | `app/services/test_ctd_checker.py` | **14 / 14 passed** ✅ |
-| FastAPI Endpoints | `app/test_api.py` | **12 / 12 passed** ✅ |
-| **Total** | | **34 / 34 passed** ✅ |
-
-> **Note**: A pre-existing Pydantic v2 deprecation warning (`Support for class-based config is deprecated, use ConfigDict instead`) appears in test output. This originates in a third-party library dependency and does not affect functionality.
-
-### Running Tests
-
-```bash
-cd src/backend
-python -m pytest app/services/test_prr.py app/services/test_ctd_checker.py app/test_api.py -v
-```
+| Suite | File / Command | Result |
+|-------|----------------|--------|
+| PRR Signal Detection | `src/backend/app/services/test_prr.py` | **8 / 8 passed** ✅ |
+| CTD Checker | `src/backend/app/services/test_ctd_checker.py` | **14 / 14 passed** ✅ |
+| FastAPI Endpoints | `src/backend/app/test_api.py` | **12 / 12 passed** ✅ |
+| Bob AI Chat Bridge | `src/backend/app/test_bob_chat.py` | **9 / 9 passed** ✅ |
+| MCP Server (6 Tools) | `src/mcp_server/test_mcp_server.py` | **32 / 32 passed** ✅ |
+| Frontend Build & Types | `cd src/frontend && npm run build` | **0 errors / built** ✅ |
+| **Total Automated Tests** | | **75 / 75 passed** ✅ |
 
 ---
 
@@ -197,6 +211,8 @@ PRR priority levels (`PRIORITY_1`, `PRIORITY_2`, `REVIEW`, `LOW`) are **applicat
 
 ```
 bob-ai-hackathon-TechTrix/
+├── .bob/
+│   └── mcp.json                     # IBM Bob MCP server integration configuration
 ├── data/
 │   ├── ich_m4_requirements.json     # ICH M4(R4) CTD requirements definition (M1–M5)
 │   ├── processed/                   # Generated artifacts — NOT committed (see .gitignore)
@@ -213,23 +229,34 @@ bob-ai-hackathon-TechTrix/
 │               └── REAC26Q1.txt
 ├── src/
 │   ├── backend/
-│   │   ├── __init__.py
 │   │   ├── regression_test.py       # Old vs new CTD scoring regression script
 │   │   └── app/
-│   │       ├── __init__.py
 │   │       ├── config.py            # FastAPI settings (paths, CORS, metadata)
 │   │       ├── ctd_schemas.py       # Pydantic response models for CTD endpoints
-│   │       ├── main.py              # FastAPI application and all route definitions
+│   │       ├── main.py              # FastAPI application and route definitions
 │   │       ├── schemas.py           # Pydantic response models for signal endpoints
 │   │       ├── test_api.py          # FastAPI endpoint integration tests (12 tests)
+│   │       ├── test_bob_chat.py     # Bob AI chat bridge integration tests (9 tests)
 │   │       └── services/
-│   │           ├── __init__.py
+│   │           ├── bob_chat.py      # Deterministic local chat orchestration bridge
 │   │           ├── ctd_checker.py   # ICH M4 CTD structural checker service
 │   │           ├── faers_processor.py  # FAERS raw data ingestion and normalization
 │   │           ├── prr.py           # PRR/chi-square signal detection engine
 │   │           ├── test_ctd_checker.py  # CTD checker unit tests (14 tests)
 │   │           └── test_prr.py      # PRR engine unit tests (8 tests)
-│   └── .env.example                 # Environment variable template (copy to .env)
+│   ├── frontend/                    # React 19 + TypeScript + Vite web application
+│   │   ├── package.json
+│   │   ├── src/
+│   │   │   ├── App.tsx              # Router & layout entry point
+│   │   │   ├── components/          # TopBar, Sidebar, ContingencyTable, etc.
+│   │   │   ├── pages/               # Dashboard, Signals, SignalDetail, Submission, GapReport, BobAI
+│   │   │   ├── services/api.ts      # Typed Axios API client (including bobChat)
+│   │   │   └── types/api.ts         # TypeScript data contracts matching FastAPI schemas
+│   │   └── vite.config.ts
+│   └── mcp_server/
+│       ├── server.py                # Standalone FastMCP server (6 tools)
+│       ├── test_mcp_server.py       # MCP test suite (32 tests)
+│       └── mcp_config_template.json # Configuration template
 ├── docs/
 │   ├── architecture.md
 │   ├── problem-statement.md
@@ -242,7 +269,6 @@ bob-ai-hackathon-TechTrix/
 │   └── screenshots/
 ├── presentation/
 │   └── README.md
-├── .env.example                     # Root environment template
 ├── .gitignore
 ├── CONTRIBUTING.md
 ├── README.md                        # This file
@@ -251,12 +277,12 @@ bob-ai-hackathon-TechTrix/
 
 ---
 
-## Setup
+## Setup & Running
 
 ### Prerequisites
 
 - Python 3.11 or later
-- No Node.js required for the current backend-only implementation (React frontend is planned)
+- Node.js 18+ and npm (for frontend)
 
 ### 1. Clone the repository
 
@@ -265,57 +291,53 @@ git clone https://github.com/PriyanshiG-HUB/bob-ai-hackathon-TechTrix.git
 cd bob-ai-hackathon-TechTrix
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Backend Setup
 
 ```bash
+# Create and activate virtual environment
 python -m venv .venv
-# macOS / Linux
-source .venv/bin/activate
-# Windows PowerShell
-.\.venv\Scripts\Activate.ps1
-```
+# Linux / macOS: source .venv/bin/activate
+# Windows PowerShell: .\.venv\Scripts\Activate.ps1
 
-### 3. Install backend dependencies
-
-```bash
+# Install backend & MCP dependencies
 pip install fastapi==0.116.2 uvicorn==0.35.0 pandas==2.2.3 numpy==2.1.2 \
-            pydantic==2.10.3 pydantic-settings==2.6.1 \
+            pydantic==2.10.3 pydantic-settings==2.6.1 mcp==1.26.0 \
             pytest==9.1.1 httpx==0.28.1
 ```
 
-### 4. Prepare FAERS data (one-time)
-
-Place the raw FAERS 2026 Q1 ASCII files into `data/raw/faers/2026Q1/`:
-
-```
-DEMO26Q1.txt  DRUG26Q1.txt  OUTC26Q1.txt  REAC26Q1.txt
-```
-
-Then run the FAERS processor to build the normalized CSV and PRR index:
+### 3. Start Backend Server
 
 ```bash
 cd src/backend
-python -c "from app.services.faers_processor import process_faers; process_faers()"
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-> If the processed artifacts are already present at `data/processed/`, this step can be skipped.
+- API docs: `http://127.0.0.1:8000/docs`
 
-### 5. Start the FastAPI backend
+### 4. Frontend Setup & Run
 
 ```bash
-cd src/backend
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+cd src/frontend
+npm install
+npm run dev
 ```
 
-- API root: `http://localhost:8000`
-- Interactive Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+- Web UI: `http://localhost:5173`
 
-### 6. Run tests
+### 5. Running All Tests
 
 ```bash
+# Backend unit & integration tests (43 tests)
 cd src/backend
-python -m pytest app/services/test_prr.py app/services/test_ctd_checker.py app/test_api.py -v
+python -m pytest app/services/test_prr.py app/services/test_ctd_checker.py app/test_api.py app/test_bob_chat.py -v
+
+# MCP server tests (32 tests)
+cd ../mcp_server
+python -m pytest test_mcp_server.py -v
+
+# Frontend build check
+cd ../frontend
+npm run build
 ```
 
 ---
@@ -324,20 +346,13 @@ python -m pytest app/services/test_prr.py app/services/test_ctd_checker.py app/t
 
 ### ✅ Completed
 
-- FDA AEMS/FAERS 2026 Q1 data ingestion and normalization
-- Suspect drug filtering and active-ingredient universe construction
-- PRR signal detection engine (PRR, chi-square, confidence, priority)
-- Compact PRR index (~8.8 MB, ~0.43 s cold-start load)
-- FastAPI REST API with 9 endpoints (signal detection + CTD readiness)
-- ICH M4(R4) CTD requirements definition (M1–M5, corrected 5.3.x numbering)
-- CTD structural checker (section parsing, matching, module scoring, gap reports)
-- 34 automated tests (8 PRR + 14 CTD + 12 API), all passing
-
-### 🔲 Planned
-
-- **React frontend** — dashboard for signal exploration and CTD readiness visualization
-- **IBM Bob / MCP integration** — conversational pharmacovigilance assistant via Bob AI
-- **Final demo and presentation assets** — recorded walkthrough, screenshots, slide deck
+- **FAERS 2026 Q1 Data Pipeline**: Ingestion, suspect drug filtering (`PS`/`SS`), normalization, and compact binary caching (~8.8 MB).
+- **Deterministic PRR Engine**: Proportional Reporting Ratio, Pearson Chi-Square ($\chi^2$), $2\times 2$ contingency table generation, and 4-tier review priority (`PRIORITY_1`, `PRIORITY_2`, `REVIEW`, `LOW`).
+- **ICH M4(R4) CTD Checker**: Full M1–M5 structural parsing, required section matching, module completeness scoring, and prioritized gap classification (`CRITICAL`, `HIGH`, `MEDIUM`).
+- **FastAPI REST API**: 10 endpoints serving statistical signals, comparison, submission assessment, module drilldown, and Bob chat.
+- **Model Context Protocol (MCP) Server**: 6 standardized MCP tools (`get_system_stats`, `get_signals`, `get_signal_detail`, `check_submission`, `get_gap_report`, `get_submission_module`) with `.bob/mcp.json` integration.
+- **React 19 Frontend**: Full UI dashboard for interactive signal triage, contingency table breakdown, dossier readiness evaluation, and live Bob AI conversational chat.
+- **75 Automated Tests**: 100% passing across PRR, CTD, FastAPI, Bob Chat, and MCP suites.
 
 ---
 
@@ -347,3 +362,4 @@ python -m pytest app/services/test_prr.py app/services/test_ctd_checker.py app/t
 |-------|-------|
 | **Project** | AetherGuard AI |
 | **Repository** | [PriyanshiG-HUB/bob-ai-hackathon-TechTrix](https://github.com/PriyanshiG-HUB/bob-ai-hackathon-TechTrix) |
+
